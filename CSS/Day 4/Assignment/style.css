@@ -28,10 +28,11 @@
             list-style: none;
         }
         .logo-version{
-            width: 8%;
+            flex:0,1,auto;
             height: 54px;
             border: 2px solid green;
             justify-content: space-around;
+
         }
         .logo-version img{
             height: 40px;
@@ -47,7 +48,7 @@
             background-color: #343a45;
             border-radius: 30px;
             height: 40px;
-            width: 60%;
+            flex:1 1 auto;
             border: 2px solid orange;
         }
         .search .bar{
