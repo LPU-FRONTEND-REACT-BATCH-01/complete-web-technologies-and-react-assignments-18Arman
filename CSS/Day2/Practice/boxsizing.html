@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .b1 , .b2{
+            height: 200px;
+            width: 300px;
+            padding:0px;
+            margin: 0px;
+            border: 2px solid black;
+        }
+        .b1{
+            box-sizing: border-box;
+            padding:10px;
+            margin:10px;
+        }
+        .b2{
+            box-sizing: content-box;
+            padding:10px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="b1">
+        border-box
+    </div>
+    <div class="b2">
+       content-box
+    </div>
+</body>
+</html>
