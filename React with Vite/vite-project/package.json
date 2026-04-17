@@ -1,0 +1,28 @@
+{
+  "name": "vite-project",
+  "private": true, //whatever we are developing it will not go to the company or remote repo, it will be in local only
+  "version": "0.0.0",// current version of this project
+  "type": "module",// we are referring this for type of import and export type
+  "scripts": {
+    "dev": "vite",//when we do npm run dev, it will run  this server
+    "build": "vite build",//npm run build, at the end when project is done completely then before deploying we use to to build it. completely
+    "lint": "eslint .",// is used to check the syntax of react project, we will give out own custom checker like here there is a file name esling.config.js
+    "preview": "vite preview"// for previewing the build project.
+  },
+  "dependencies": {//these two libraries are compulsory(react and react-dom)
+  //these will be used here
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {//these dependencies we are not going to use or in this project
+    "@eslint/js": "^9.39.4",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",//build tool
+    "eslint": "^9.39.4",//dependencites for eslint
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.4.0",
+    "vite": "^8.0.4"
+  }
+}

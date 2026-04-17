@@ -1,0 +1,7 @@
+{
+    "compilerOptions": {
+        "rootDir": "./src",//here we will define from where it have to take the source files
+        "outDir": "./dest",
+        "noEmitOnError": true//if we are having error in ts file then it will not be converted to JS   
+    }
+}
