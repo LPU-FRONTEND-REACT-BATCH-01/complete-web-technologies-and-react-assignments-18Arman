@@ -1,0 +1,16 @@
+div>h1{
+    color:red;
+}
+div p{
+    color:rgb(40, 29, 18);
+}
+div p:last-child{
+    color:blue;
+    text-decoration: underline;
+}
+div{
+    height: 200px;
+    width: 200px;
+    background-color: aqua;
+    text-align: center;
+}
