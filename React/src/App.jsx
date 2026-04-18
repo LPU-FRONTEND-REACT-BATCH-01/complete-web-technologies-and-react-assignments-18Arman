@@ -11,11 +11,12 @@ let user2={
     email:"21arpit@gmail.com"
 }
 import Bulb from './Day2/Components/Bulb.jsx'
-import fbc from './Day2/Components/FbcUseEffect.jsx'
+import FBC from './Day2/Components/FbcUseEffect.jsx'
+import Login from './Day2/Components/Login.jsx'
+import Slider from './Day3/Components/slider.jsx'
 const App = () => {
   return <div>
-    <Bulb/>
-    <fbc/>
+    <Slider/>
   </div>
 }
 
