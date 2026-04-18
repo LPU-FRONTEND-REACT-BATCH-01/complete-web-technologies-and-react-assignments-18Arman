@@ -1,0 +1,25 @@
+div{
+    display: flex;
+    height: 250px;
+    width: 460px;
+    background-color: rgb(208, 208, 208);
+    border-radius: 5px;
+    flex:1,1,100px;
+    justify-content: space-evenly;
+}
+div>img{
+    /* margin: 10px; */
+    border-radius: 10px;
+    height: 200px;
+    width: 200px;
+    border: 2px solid rgb(47, 68, 255);
+    text-align: center ;
+}
+div>button{
+    border-radius: 10px;
+    border:2px solid rgba(57, 106, 52, 0.304);
+}
+div>button:active{
+    border: 1px solid rgb(0, 0, 0);
+    box-shadow:  1px 1px  rgba(0, 0, 0, 0.288)  ;
+}

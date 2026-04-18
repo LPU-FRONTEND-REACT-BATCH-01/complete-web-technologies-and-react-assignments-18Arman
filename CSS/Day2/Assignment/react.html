@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>React.dev Inspired Front Page</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0b0f17;
+      --bg-soft: #111827;
+      --panel: rgba(255, 255, 255, 0.04);
+      --panel-2: rgba(255, 255, 255, 0.06);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #58c4dc;
+      --accent-soft: rgba(88, 196, 220, 0.14);
+      --btn-dark: #1f2937;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(88, 196, 220, 0.18), transparent 30%),
+        linear-gradient(180deg, #0b0f17 0%, #0b1120 100%);
+      color: var(--text);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background: rgba(11, 15, 23, 0.82);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .navbar {
+      height: 64px;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 17px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .react-logo {
+      width: 28px;
+      height: 28px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .version-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #d4d4d8;
+      background: var(--panel);
+      border: 1px solid var(--border);
+    }
+
+    .search-btn {
+      margin-left: 6px;
+      width: 270px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 14px;
+      color: var(--muted);
+      font: inherit;
+    }
+
+    .search-btn .shortcut {
+      margin-left: auto;
+      height: 24px;
+      padding: 0 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.03);
+      display: inline-flex;
+      align-items: center;
+      font-size: 12px;
+      color: #d4d4d8;
+    }
+
+    .nav-links {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .nav-links a {
+      color: #d4d4d8;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #d4d4d8;
+      background: transparent;
+      border: 1px solid transparent;
+    }
+
+    .icon-btn:hover {
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+    }
+
+    .icon-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 88px 20px 40px;
+      text-align: center;
+    }
+
+    .hero-logo {
+      width: 120px;
+      height: 120px;
+      color: var(--accent);
+      margin: 0 auto 26px;
+      display: block;
+      filter: drop-shadow(0 0 30px rgba(88, 196, 220, 0.18));
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(3rem, 8vw, 6rem);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      font-weight: 800;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 22px auto 0;
+      font-size: 1.25rem;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .hero-actions {
+      margin-top: 32px;
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 15px;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #06222a;
+    }
+
+    .btn-secondary {
+      background: var(--btn-dark);
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .preview {
+      max-width: 1200px;
+      margin: 56px auto 0;
+      padding: 0 20px;
+    }
+
+    .preview-shell {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 20px 80px rgba(0,0,0,0.35);
+    }
+
+    .code-panel,
+    .app-panel {
+      min-height: 420px;
+      padding: 28px;
+    }
+
+    .code-panel {
+      background: rgba(2, 6, 23, 0.82);
+      border-right: 1px solid var(--border);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: #cbd5e1;
+      font-size: 14px;
+      line-height: 1.85;
+      overflow: auto;
+    }
+
+    .code-panel .dim {
+      color: #64748b;
+    }
+
+    .code-panel .kw {
+      color: #c084fc;
+    }
+
+    .code-panel .fn {
+      color: #60a5fa;
+    }
+
+    .code-panel .tag {
+      color: #fda4af;
+    }
+
+    .code-panel .str {
+      color: #86efac;
+    }
+
+    .app-panel {
+      background:
+        radial-gradient(circle at top right, rgba(88, 196, 220, 0.12), transparent 40%),
+        rgba(15, 23, 42, 0.95);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .mini-browser {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.03);
+      padding: 18px;
+    }
+
+    .mini-dots {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .mini-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+    }
+
+    .mini-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .mini-card h3 {
+      margin: 0 0 8px;
+      font-size: 1.2rem;
+    }
+
+    .mini-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 90px 20px 20px;
+    }
+
+    .section-heading {
+      max-width: 760px;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    .section-heading p {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      min-height: 220px;
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-soft);
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.15rem;
+    }
+
+    .feature-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .cta-section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 100px 20px 120px;
+      text-align: center;
+    }
+
+    .cta-box {
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.025));
+      border-radius: 28px;
+      padding: 48px 24px;
+    }
+
+    .cta-box h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      letter-spacing: -0.04em;
+    }
+
+    .cta-box p {
+      margin: 16px auto 0;
+      max-width: 680px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .cta-box .hero-actions {
+      margin-top: 28px;
+    }
+
+    @media (max-width: 980px) {
+      .search-btn,
+      .actions {
+        display: none;
+      }
+
+      .preview-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .code-panel {
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .version-pill,
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 64px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero p,
+      .section-heading p,
+      .cta-box p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="navbar">
+      <a href="#" class="brand">
+        <svg class="react-logo" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <circle cx="16" cy="16" r="2.2" fill="currentColor"></circle>
+          <ellipse cx="16" cy="16" rx="11" ry="4.2" stroke="currentColor" stroke-width="1.8"></ellipse>
+          <ellipse cx="16" cy="16" rx="11" ry="4.2" stroke="currentColor" stroke-width="1.8" transform="rotate(60 16 16)"></ellipse>
+          <ellipse cx="16" cy="16" rx="11" ry="4.2" stroke="currentColor" stroke-width="1.8" transform="rotate(120 16 16)"></ellipse>
+        </svg>
+        <span>React</span>
+      </a>
+
+      <a href="#" class="version-pill">v 19.2</a>
+
+      <div class="search-btn">
+        <span>Search</span>
+        <span class="shortcut">⌘ K</span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#">Learn</a>
+        <a href="#">Reference</a>
+        <a href="#">Community</a>
+        <a href="#">Blog</a>
+      </nav>
+
+      <div class="actions">
+        <a href="#" class="icon-btn" aria-label="Theme">
+          <svg viewBox="0 0 24 24">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3A7 7 0 0 0 21 12.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="#" class="icon-btn" aria-label="GitHub">
+          <svg viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.42-4.04-1.42c-.55-1.37-1.33-1.73-1.33-1.73c-1.08-.73.08-.72.08-.72c1.2.08 1.83 1.21 1.83 1.21c1.06 1.8 2.8 1.28 3.48.98c.11-.75.42-1.28.76-1.57c-2.66-.29-5.46-1.31-5.46-5.85c0-1.29.47-2.34 1.22-3.17c-.12-.3-.53-1.5.12-3.13c0 0 1-.32 3.3 1.21A11.6 11.6 0 0 1 12 6.6c1.02 0 2.05.14 3.01.42c2.3-1.53 3.3-1.21 3.3-1.21c.65 1.63.24 2.83.12 3.13c.76.83 1.22 1.88 1.22 3.17c0 4.55-2.8 5.55-5.47 5.84c.43.37.81 1.09.81 2.2v3.26c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <svg class="hero-logo" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <circle cx="16" cy="16" r="2.4" fill="currentColor"></circle>
+        <ellipse cx="16" cy="16" rx="11" ry="4.2" stroke="currentColor" stroke-width="1.8"></ellipse>
+        <ellipse cx="16" cy="16" rx="11" ry="4.2" stroke="currentColor" stroke-width="1.8" transform="rotate(60 16 16)"></ellipse>
+        <ellipse cx="16" cy="16" rx="11" ry="4.2" stroke="currentColor" stroke-width="1.8" transform="rotate(120 16 16)"></ellipse>
+      </svg>
+
+      <h1>React</h1>
+      <p>
+        The library for web and native user interfaces.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#" class="btn btn-primary">Learn React</a>
+        <a href="#" class="btn btn-secondary">API Reference</a>
+      </div>
+    </section>
+
+    <section class="preview">
+      <div class="preview-shell">
+        <div class="code-panel">
+          <span class="dim">function</span> <span class="fn">Video</span>({ video }) {<br>
+          &nbsp;&nbsp;<span class="kw">return</span> (<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tag">div</span>&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tag">Thumbnail</span> video={video} /&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tag">a</span> href={video.url}&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tag">h3</span>&gt;{video.title}&lt;/<span class="tag">h3</span>&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tag">p</span>&gt;{video.description}&lt;/<span class="tag">p</span>&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="tag">a</span>&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tag">LikeButton</span> video={video} /&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="tag">div</span>&gt;<br>
+          &nbsp;&nbsp;);<br>
+          }
+        </div>
+
+        <div class="app-panel">
+          <div class="mini-browser">
+            <div class="mini-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="mini-card">
+              <h3>Create user interfaces from components</h3>
+              <p>
+                Build screens, pages, and entire apps from reusable pieces that work together cleanly.
+              </p>
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <h3>Write components with code and markup</h3>
+            <p>
+              React combines JavaScript logic with UI structure so it stays expressive and maintainable.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <h2>Create user interfaces from components</h2>
+        <p>
+          React lets you build user interfaces out of individual pieces called components. Create your own React components and combine them into entire screens, pages, and apps.
+        </p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+              <path d="M4 6h16v12H4zM9 6v12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Component-Based</h3>
+          <p>
+            Split your UI into independent pieces and reuse them wherever you need.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+              <path d="M12 3v18M3 12h18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Learn Once</h3>
+          <p>
+            React works across the web and native platforms using the same component mindset.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+              <path d="M4 17l5-5l4 4l7-8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Backed by a Strong Ecosystem</h3>
+          <p>
+            Use React with modern tooling, frameworks, and patterns to build production-grade apps.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="cta-box">
+        <h2>Start building with React</h2>
+        <p>
+          Learn the fundamentals, explore the API, and begin creating interactive interfaces with a structure similar to the React docs homepage.
+        </p>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-primary">Get Started</a>
+          <a href="#" class="btn btn-secondary">Read the Docs</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
